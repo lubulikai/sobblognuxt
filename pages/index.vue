@@ -39,9 +39,14 @@
               <span>{{ item.summary }}</span>
             </div>
             <div>
-              <el-tag v-for="label in item.labels" :key="label" class="article-label">{{
-                label
-              }}</el-tag>
+              <el-tag
+                v-for="label in item.labels"
+                :key="label"
+                class="article-label"
+                @click="doSearch(label)"
+              >
+                {{ label }}
+              </el-tag>
             </div>
           </div>
         </div>
@@ -65,7 +70,6 @@
         </div>
         <el-pagination
           class="article-page"
-          background
           layout="prev, pager, next"
           :current-page="currentPageIndex"
           :page-size="currentPageSize"
@@ -80,7 +84,7 @@
         <el-input
           v-model="searchParams"
           placeholder="请输入要搜索的内容"
-          @keyup.enter.native="doSearch"
+          @keyup.enter.native="doSearch(searchParams)"
         >
           <i slot="prefix" class="el-input__icon el-icon-search"></i>
         </el-input>
@@ -153,17 +157,19 @@ export default {
     window.removeEventListener('scroll', this.onWindowScroll)
   },
   methods: {
-    doSearch() {
+    doSearch(param) {
+      this.searchParams = param
       if (this.searchParams === '') {
         this.$message.error('查询条件不能为空')
         return false
       }
-      this.$router.push({
-        name: 'search',
-        query: {
-          keyWord: this.searchParams.trim()
-        }
-      })
+      window.open('/search?keyword=' + this.searchParams.trim())
+      // this.$router.push({
+      //   name: 'search',
+      //   query: {
+      //     keyword: this.searchParams.trim()
+      //   }
+      // })
     },
     async listArticleByCategoryId(categoryId) {
       this.currentCategoryId = categoryId
@@ -264,7 +270,7 @@ export default {
       }
     },
     wordClickHandler(name, value, vm) {
-      console.log('wordClickHandler', name, value, vm)
+      this.doSearch(name)
     }
   }
 }
@@ -346,11 +352,6 @@ export default {
   margin-top: 10px;
   margin-bottom: 10px;
   text-align: center;
-}
-.el-pagination.is-background .btn-next,
-.el-pagination.is-background .btn-prev,
-.el-pagination.is-background .el-pager li {
-  background-color: white;
 }
 .part-title {
   font-size: 20px;

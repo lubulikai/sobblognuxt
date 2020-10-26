@@ -37,6 +37,20 @@ export default ({ $axios }, inject) => {
     },
     getFriendLink: () => {
       return requestGet('/portal/web_size_info/friend_link')
+    },
+    getSearchInfo: (categoryId = '', keyword, page, size, sort) => {
+      return requestGet(
+        '/portal/search?keyword=' +
+          encodeURIComponent(keyword) +
+          '&categoryId=' +
+          categoryId +
+          '&page=' +
+          page +
+          '&size=' +
+          size +
+          '&sort=' +
+          sort
+      )
     }
   }
 

@@ -5,7 +5,7 @@
         <div id="div-header-box" class="div-header-box">
           <div class="div-header-website-name">博客门户</div>
           <div class="div-header-login-register">
-            <nuxt-link class="jump-link" to="/">登录 </nuxt-link>
+            <nuxt-link class="jump-link" to="/login">登录 </nuxt-link>
             <nuxt-link class="jump-link" to="/">注册 </nuxt-link>
           </div>
           <div class="div-header-jump">
